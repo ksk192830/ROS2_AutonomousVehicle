@@ -1,0 +1,8 @@
+# ROS 2 perception launch configuration — original competition defaults.
+# Adjust device IDs and ports for each PC. Keep local secrets out of this file.
+camera_front_index: 2
+camera_traffic_index: 4
+lidar_serial_port: /dev/ttyUSB0
+model_filename: final.pt
+inference_device: cuda:0
+image_dir: ~/ros2_av_captures/3rd_skku

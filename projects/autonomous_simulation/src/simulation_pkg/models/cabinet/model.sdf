@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="cabinet">
+    <static>true</static>
+    <link name="cabinet_link">
+      <visual name="cabinet_visual">
+        <geometry>
+          <mesh>
+            <uri>model://cabinet/meshes/cabinet.obj</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name="cabinet_collision">
+        <pose>0 0 1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.5 0.6 2</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

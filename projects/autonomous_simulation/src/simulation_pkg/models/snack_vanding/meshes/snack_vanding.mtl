@@ -1,0 +1,39 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl lambert15
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32
+illum 2
+map_Kd textures/lambert15_baseColor.png
+
+newmtl lambert12
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32
+illum 2
+map_Kd textures/lambert12_baseColor.png
+
+newmtl lambert13
+Ka 0.34009999 0.451700002 0.671800017
+Kd 0.34009999 0.451700002 0.671800017
+Ks 0.15 0.15 0.15
+Ke 0 0 0
+d 0.262010306
+Ns 32
+illum 2
+
+newmtl $Material_3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.05 0.05 0.05
+Ke 0 0 0
+d 1
+illum 1

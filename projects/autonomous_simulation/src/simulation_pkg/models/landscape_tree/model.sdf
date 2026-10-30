@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="landscape_tree">
+    <static>true</static>
+    <link name="tree_link">
+      <collision name="trunk_collision">
+        <pose>0 0 1.15 0 0 0</pose>
+        <geometry><cylinder><radius>0.24</radius><length>2.3</length></cylinder></geometry>
+      </collision>
+      <visual name="tree_lowpoly_visual">
+        <geometry><mesh><uri>model://landscape_tree/tree_naturepack.obj</uri></mesh></geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+    </link>
+  </model>
+</sdf>

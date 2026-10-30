@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="printer">
+    <static>true</static>
+    <link name="printer_link">
+      <visual name="printer_visual">
+        <geometry>
+          <mesh>
+            <uri>model://printer/meshes/printer.obj</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="printer_collision">
+        <pose>0 0 0.675 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.201 0.687 1.35</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

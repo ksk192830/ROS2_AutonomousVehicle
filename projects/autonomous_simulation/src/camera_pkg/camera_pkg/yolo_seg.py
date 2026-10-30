@@ -1,0 +1,267 @@
+import rclpy
+from rclpy.node import Node
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy, QoSDurabilityPolicy
+
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import cv2
+import numpy as np
+
+from ultralytics import YOLO
+from ultralytics.utils import LOGGER as ULTRA_LOGGER
+from interfaces_pkg.msg import Detection, DetectionArray, Mask, Point2D
+from interfaces_pkg.msg import BoundingBox2D, State
+from rclpy.parameter import Parameter
+
+import logging
+import os
+
+
+def color_for_id(idx: int) -> tuple:
+    """
+    Return a stable, visually distinct BGR color for a given integer id.
+    Uses HSV hue wheel so different ids map to different colors.
+    """
+    hue = (idx * 37) % 180  # OpenCV HSV hue range: 0~179
+    hsv = np.uint8([[[hue, 255, 255]]])  # full saturation/value
+    bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)[0, 0]
+    return int(bgr[0]), int(bgr[1]), int(bgr[2])
+
+
+class YoloSegNode(Node):
+    def __init__(self):
+        super().__init__('yolo_seg')
+
+        default_model_path = "/home/sg/contest_ws/src/camera_pkg/camera_pkg/model/best.pt"
+        self.declare_parameter("model_path", default_model_path)
+        self.declare_parameter("device", "cpu")
+        self.declare_parameter("threshold", 0.3)
+        self.declare_parameter("imgsz", 640)
+        self.declare_parameter("use_half", True)
+        self.declare_parameter("max_det", 20)
+
+        # Visualization options
+        self.declare_parameter("mask_fill", True)         # True: fill + outline, False: outline only
+        self.declare_parameter("mask_alpha", 0.25)        # transparency for filled masks
+        self.declare_parameter("color_by", "class")       # "class" or "instance"
+
+        # segmentation 허용 state 목록
+        self.declare_parameter("allowed_states", ["__ALL__"])
+        self.allowed_states = list(
+            self.get_parameter("allowed_states").get_parameter_value().string_array_value
+        )
+        self.current_state = None
+
+        compact_logs_env = os.environ.get('E2E_COMPACT_LOGS')
+        self.compact_logs = True if compact_logs_env is None else compact_logs_env != '0'
+        if self.compact_logs:
+            ULTRA_LOGGER.setLevel(logging.WARNING)
+
+        self.model_path = self.get_parameter("model_path").get_parameter_value().string_value
+        self.device = self.get_parameter("device").get_parameter_value().string_value
+        self.threshold = self.get_parameter("threshold").get_parameter_value().double_value
+        self.imgsz = int(self.get_parameter("imgsz").value)
+        self.use_half = bool(self.get_parameter("use_half").value)
+        self.max_det = int(self.get_parameter("max_det").value)
+
+        requested_device = self.device
+        cuda_available = False
+        try:
+            import torch
+            cuda_available = bool(torch.cuda.is_available())
+        except Exception:
+            cuda_available = False
+
+        if self.device.startswith('cuda') and not cuda_available:
+            self.get_logger().warn(
+                f"Requested device '{self.device}' but CUDA is not available. Falling back to 'cpu'."
+            )
+            self.device = 'cpu'
+
+        self.use_half = self.use_half and self.device.startswith('cuda') and cuda_available
+        if cuda_available:
+            try:
+                import torch
+                torch.backends.cudnn.benchmark = True
+            except Exception:
+                pass
+
+        self.get_logger().debug(
+            f"YOLO runtime device: requested={requested_device}, resolved={self.device}, cuda_available={cuda_available}"
+        )
+
+        self.mask_fill = self.get_parameter("mask_fill").get_parameter_value().bool_value
+        self.mask_alpha = self.get_parameter("mask_alpha").get_parameter_value().double_value
+        self.color_by = self.get_parameter("color_by").get_parameter_value().string_value
+
+        self.bridge = CvBridge()
+        self.model = None
+
+        image_qos = QoSProfile(
+            reliability=QoSReliabilityPolicy.BEST_EFFORT,
+            history=QoSHistoryPolicy.KEEP_LAST,
+            durability=QoSDurabilityPolicy.VOLATILE,
+            depth=1
+        )
+
+        reliable_qos = QoSProfile(
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            history=QoSHistoryPolicy.KEEP_LAST,
+            durability=QoSDurabilityPolicy.VOLATILE,
+            depth=1
+        )
+
+        self.publisher = self.create_publisher(DetectionArray, "detections", reliable_qos)
+        self.subscription = self.create_subscription(Image, "image_raw", self.image_cb, image_qos)
+        self.vis_pub = self.create_publisher(Image, "seg_vis", image_qos)
+        self.state_sub = self.create_subscription(State, "/motion_state", self.state_cb, reliable_qos)
+
+        # Load model
+        if not os.path.exists(self.model_path):
+            self.get_logger().error(f"Model not found: {self.model_path}")
+            return
+
+        try:
+            self.model = YOLO(self.model_path)
+            self.model.fuse()
+            self.get_logger().debug(f"Model loaded from {self.model_path}")
+        except Exception as e:
+            self.get_logger().error(f"Failed to load model: {e}")
+            return
+
+    def state_cb(self, msg: State):
+        self.current_state = msg.state
+ 
+    def image_cb(self, msg: Image):
+        if self.model is None:
+            return
+
+        # self.get_logger().info(f"Seg running (state={self.current_state}, \nallowed={self.allowed_states})\n\n\n")
+        
+        # state가 있고, allowed_states에도 없으면 skip
+        if self.current_state is not None:
+            if "__ALL__" not in self.allowed_states and self.current_state not in self.allowed_states:
+                    # seg_vis: image_raw 그대로
+                try:
+                    cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+                    vis_msg = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
+                    vis_msg.header = msg.header
+                    self.vis_pub.publish(vis_msg)
+                    detections_msg = DetectionArray()
+                    detections_msg.header = msg.header
+                    self.publisher.publish(detections_msg)
+                except Exception:
+                    pass
+                return
+                
+    
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+
+        try:
+            results = self.model.predict(
+                source=cv_image,
+                device=self.device,
+                conf=self.threshold,
+                imgsz=self.imgsz,
+                half=self.use_half,
+                max_det=self.max_det,
+                stream=False,
+                verbose=False
+            )[0].cpu()
+
+            detections_msg = DetectionArray()
+            detections_msg.header = msg.header
+
+            # Build DetectionArray message
+            for i in range(len(results.boxes)):
+                det = Detection()
+                det.class_id = int(results.boxes[i].cls)
+                det.class_name = self.model.names[det.class_id]
+                det.score = float(results.boxes[i].conf)
+
+                bbox_xywh = results.boxes.xywh[i]
+                det.bbox = BoundingBox2D()
+                det.bbox.center.position.x = float(bbox_xywh[0])
+                det.bbox.center.position.y = float(bbox_xywh[1])
+                det.bbox.size.x = float(bbox_xywh[2])
+                det.bbox.size.y = float(bbox_xywh[3])
+
+                if results.masks is not None and i < len(results.masks.xy):
+                    mask_msg = Mask()
+                    mask_msg.width = results.orig_shape[1]
+                    mask_msg.height = results.orig_shape[0]
+                    for pt in results.masks.xy[i].tolist():
+                        p = Point2D()
+                        p.x = float(pt[0])
+                        p.y = float(pt[1])
+                        mask_msg.data.append(p)
+                    det.mask = mask_msg
+
+                detections_msg.detections.append(det)
+
+            self.publisher.publish(detections_msg)
+
+            # Visualization image
+            vis = cv_image.copy()
+
+            # Draw per-object overlays
+            for i in range(len(results.boxes)):
+                xyxy = results.boxes.xyxy[i].cpu().numpy().astype(int)
+                x1, y1, x2, y2 = xyxy
+
+                class_id = int(results.boxes[i].cls)
+                conf = float(results.boxes[i].conf)
+                name = self.model.names[class_id]
+
+                if self.color_by == "instance":
+                    color = color_for_id(i)
+                else:
+                    color = color_for_id(class_id)
+
+                # Draw bbox
+                cv2.rectangle(vis, (x1, y1), (x2, y2), color, 2)
+
+                # Label (with background)
+                label = f"{name}:{conf:.2f}"
+                (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+                y_top = max(0, y1 - th - 8)
+                cv2.rectangle(vis, (x1, y_top), (x1 + tw + 4, y1), color, -1)
+                cv2.putText(
+                    vis, label, (x1 + 2, max(0, y1 - 5)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA
+                )
+
+                # Draw mask (outline and optional fill)
+                if results.masks is not None and i < len(results.masks.xy):
+                    poly = results.masks.xy[i]
+                    pts = poly.astype(int).reshape((-1, 1, 2))
+
+                    if self.mask_fill:
+                        overlay = vis.copy()
+                        cv2.fillPoly(overlay, [pts], color)
+                        alpha = float(self.mask_alpha)
+                        vis = cv2.addWeighted(overlay, alpha, vis, 1.0 - alpha, 0)
+
+                    cv2.polylines(vis, [pts], isClosed=True, color=color, thickness=2)
+
+            vis_msg = self.bridge.cv2_to_imgmsg(vis, encoding="bgr8")
+            vis_msg.header = msg.header
+            self.vis_pub.publish(vis_msg)
+
+        except Exception:
+            pass
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = YoloSegNode()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

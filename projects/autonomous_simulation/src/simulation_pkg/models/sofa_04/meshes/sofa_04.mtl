@@ -1,0 +1,45 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl legs
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+map_Kd textures/legs_baseColor.jpg
+bump textures/legs_normal.png
+map_bump textures/legs_normal.png
+
+newmtl pillows
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+map_Kd textures/pillows_baseColor.jpg
+bump textures/pillows_normal.png
+map_bump textures/pillows_normal.png
+
+newmtl sofaback
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+map_Kd textures/sofaback_baseColor.jpg
+bump textures/sofaback_normal.png
+map_bump textures/sofaback_normal.png
+
+newmtl sofabase
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+map_Kd textures/sofabase_baseColor.jpg
+bump textures/sofabase_normal.png
+map_bump textures/sofabase_normal.png
+
+newmtl $Material_4
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

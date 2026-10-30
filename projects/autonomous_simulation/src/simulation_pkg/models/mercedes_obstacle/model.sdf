@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="mercedes_obstacle">
+    <static>true</static>
+    <self_collide>false</self_collide>
+
+    <!--
+      Frame convention for this model:
+      - origin: rear-center point projected to ground (user request)
+      - +X: forward, +Y: left, +Z: up
+
+      Measured targets used:
+      - L/W/H = 0.955 / 0.485 / 0.280 m
+      - wheelbase = 0.540 m
+      - front track = 
+      - rear track  = 
+      - wheel diameter = 0.195 m, wheel width = 0.053 m
+      - total mass ~= 15 kg (front/rear axle load unknown)
+      - max steer = 25.18 deg = 0.4394 rad
+      - max speed = 3 km/h = 0.833 m/s
+
+      NOTE: camera/LiDAR coordinates from notes were likely mm-labeled-as-cm;
+            mounts below are set with the plausible meter values.
+    -->
+
+    <!-- Chassis -->
+    <link name="chassis">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>16</mass>
+        <pose>0.5 0 0.12 0 0 0</pose>
+        <inertia>
+          <ixx>0.18</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.70</iyy>
+          <iyz>0</iyz>
+          <izz>0.78</izz>
+        </inertia>
+      </inertial>
+
+      <!-- body_visual temporarily disabled for wheel/debug alignment -->
+      <visual name="body_visual">
+        <!-- OBJ authored in Y-up; rotate to Gazebo Z-up + forward X -->
+        <pose>0.505 0 0 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mercedes_split_tex/meshes/body.obj</uri>
+            <scale>30 24 20.88</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+
+      <collision name="chassis_collision">
+        <pose>0.495 0 0.255 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.99 0.55 0.41</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Sensor mounts (from provided list, interpreted as meters from rear-origin) -->
+
+    <!-- Front steering knuckles -->
+    <link name="front_left_steer">
+      <pose>0.792 0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.2</mass>
+        <inertia><ixx>1e-3</ixx><iyy>1e-3</iyy><izz>1e-3</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+    </link>
+
+    <link name="front_right_steer">
+      <pose>0.792 -0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.2</mass>
+        <inertia><ixx>1e-3</ixx><iyy>1e-3</iyy><izz>1e-3</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+    </link>
+
+    <!-- Wheels -->
+    <link name="front_left_wheel">
+      <pose>0.792 0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.6</mass>
+        <inertia><ixx>0.004</ixx><iyy>0.004</iyy><izz>0.004</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+      <visual name="wheel_fl_visual">
+        <pose>-0.415 -0.153 -0.098 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mercedes_split_tex/meshes/wheel_fl.obj</uri>
+            <scale>18.73 27.35 27.43</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+      <collision name="wheel_fl_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0975</radius>
+            <length>0.053</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.2</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000</kp>
+              <kd>10</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="front_right_wheel">
+      <pose>0.792 -0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.6</mass>
+        <inertia><ixx>0.004</ixx><iyy>0.004</iyy><izz>0.004</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+      <visual name="wheel_fr_visual">
+        <pose>-0.415 0.153 -0.098 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mercedes_split_tex/meshes/wheel_fr.obj</uri>
+            <scale>18.73 27.35 27.43</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+      <collision name="wheel_fr_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0975</radius>
+            <length>0.053</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.2</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000</kp>
+              <kd>10</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="rear_left_wheel">
+      <pose>0.18386 0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.6</mass>
+        <inertia><ixx>0.004</ixx><iyy>0.004</iyy><izz>0.004</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+      <visual name="wheel_rl_visual">
+        <pose>0.384 -0.150 -0.097 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mercedes_split_tex/meshes/wheel_rl.obj</uri>
+            <scale>18.73 27.35 27.43</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+      <collision name="wheel_rl_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0975</radius>
+            <length>0.053</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.2</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000</kp>
+              <kd>10</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <link name="rear_right_wheel">
+      <pose>0.18386 -0.2435 0.0975 0 0 0</pose>
+      <inertial>
+        <mass>0.6</mass>
+        <inertia><ixx>0.004</ixx><iyy>0.004</iyy><izz>0.004</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+      <visual name="wheel_rr_visual">
+        <pose>0.384 0.150 -0.097 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mercedes_split_tex/meshes/wheel_rr.obj</uri>
+            <scale>18.73 27.35 27.43</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+      <collision name="wheel_rr_collision">
+        <pose>0 0 0 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0975</radius>
+            <length>0.053</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.2</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000</kp>
+              <kd>10</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- Steering joints (front) -->
+    <joint name="front_left_steer_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>front_left_steer</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.4394</lower>
+          <upper>0.4394</upper>
+          <effort>80</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics><damping>2.0</damping><friction>0.1</friction></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="front_right_steer_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>front_right_steer</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.4394</lower>
+          <upper>0.4394</upper>
+          <effort>80</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics><damping>2.0</damping><friction>0.1</friction></dynamics>
+      </axis>
+    </joint>
+
+    <!-- Wheel spin joints -->
+    <joint name="front_left_wheel_joint" type="revolute">
+      <parent>front_left_steer</parent>
+      <child>front_left_wheel</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper><effort>200</effort><velocity>100</velocity></limit>
+        <dynamics><damping>1.0</damping><friction>0.2</friction></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="front_right_wheel_joint" type="revolute">
+      <parent>front_right_steer</parent>
+      <child>front_right_wheel</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper><effort>200</effort><velocity>100</velocity></limit>
+        <dynamics><damping>1.0</damping><friction>0.2</friction></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="rear_left_wheel_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>rear_left_wheel</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper><effort>200</effort><velocity>100</velocity></limit>
+        <dynamics><damping>1.0</damping><friction>0.2</friction></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="rear_right_wheel_joint" type="revolute">
+      <parent>chassis</parent>
+      <child>rear_right_wheel</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper><effort>200</effort><velocity>100</velocity></limit>
+        <dynamics><damping>1.0</damping><friction>0.2</friction></dynamics>
+      </axis>
+    </joint>
+
+    <!-- ros2_control backend (front steer position + rear wheel velocity) -->
+
+    <!-- DEBUG LINES: geometry check only -->
+    <link name="debug_front_track">
+      <pose>0.792 0 0.0975 0 0 0</pose>
+      <visual name="debug_front_track_visual">
+        <geometry>
+          <box><size>0.01 0.487 0.01</size></box>
+        </geometry>
+        <material>
+          <ambient>1 0 0 1</ambient>
+          <diffuse>1 0 0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <joint name="debug_front_track_joint" type="fixed">
+      <parent>chassis</parent>
+      <child>debug_front_track</child>
+    </joint>
+
+    <link name="debug_rear_track">
+      <pose>0.18386 0 0.0975 0 0 0</pose>
+      <visual name="debug_rear_track_visual">
+        <geometry>
+          <box><size>0.01 0.487 0.01</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <joint name="debug_rear_track_joint" type="fixed">
+      <parent>chassis</parent>
+      <child>debug_rear_track</child>
+    </joint>
+
+    <link name="debug_wheelbase">
+      <pose>0.48793 0.000 0.0975 0 0 0</pose>
+      <visual name="debug_wheelbase_visual">
+        <geometry>
+          <box><size>0.60814 0.01 0.01</size></box>
+        </geometry>
+        <material>
+          <ambient>0 1 0 1</ambient>
+          <diffuse>0 1 0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <joint name="debug_wheelbase_joint" type="fixed">
+      <parent>chassis</parent>
+      <child>debug_wheelbase</child>
+    </joint>
+  </model>
+</sdf>

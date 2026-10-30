@@ -1,0 +1,51 @@
+name: Reproduction checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: reproduction-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Asset tooling regression tests
+        run: python3 -m unittest discover -s tools/tests -v
+      - name: Python and shell syntax
+        run: |
+          python3 -m compileall -q projects/4th_skku_contest projects/autonomous_simulation tools
+          find tools projects/autonomous_simulation -name '*.sh' -print0 | xargs -0 -n1 bash -n
+  ros-build:
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base-jammy
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [4th_skku_contest, autonomous_simulation]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve ROS dependencies
+        shell: bash
+        run: |
+          apt-get update
+          rosdep update --rosdistro humble
+          rosdep install --from-paths projects/${{ matrix.project }}/src --ignore-src --rosdistro humble -r -y
+      - name: Build independent workspace
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd projects/${{ matrix.project }}
+          colcon build --symlink-install --event-handlers console_direct+
+      - name: Load installed simulation launch descriptions
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          source projects/${{ matrix.project }}/install/setup.bash
+          for scenario in general_sim mission_sim parking_sim; do
+            ros2 launch launch_pkg "$scenario.py" --show-args
+          done

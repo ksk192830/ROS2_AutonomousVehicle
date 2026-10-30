@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="indoor_plant">
+    <static>true</static>
+    <link name="plant_link">
+      <visual name="plant_visual">
+        <geometry>
+          <mesh>
+            <uri>model://indoor_plant/meshes/indoor_plant.obj</uri>
+            <scale>2.5 2.5 2.5</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://indoor_plant/materials/scripts</uri>
+            <uri>model://indoor_plant/materials/textures</uri>
+            <name>IndoorPlant/Shrub01</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

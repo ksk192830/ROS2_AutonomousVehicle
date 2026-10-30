@@ -1,0 +1,95 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl benchtop1
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/benchtop1_baseColor.png
+bump textures/benchtop1_normal.png
+map_bump textures/benchtop1_normal.png
+
+newmtl carcaseBaseRight
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/carcaseBaseRight_baseColor.png
+bump textures/carcaseBaseRight_normal.png
+map_bump textures/carcaseBaseRight_normal.png
+
+newmtl drawer2
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/drawer2_baseColor.png
+bump textures/drawer2_normal.png
+map_bump textures/drawer2_normal.png
+
+newmtl handle_03
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/handle_03_baseColor.png
+bump textures/handle_03_normal.png
+map_bump textures/handle_03_normal.png
+
+newmtl kick1
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/kick1_baseColor.png
+bump textures/kick1_normal.png
+map_bump textures/kick1_normal.png
+
+newmtl stand1
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/stand1_baseColor.png
+bump textures/stand1_normal.png
+map_bump textures/stand1_normal.png
+
+newmtl standbase1
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/standbase1_baseColor.png
+bump textures/standbase1_normal.png
+map_bump textures/standbase1_normal.png
+
+newmtl $Material_7
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2

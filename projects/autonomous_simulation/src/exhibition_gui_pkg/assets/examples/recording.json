@@ -1,0 +1,28 @@
+{
+  "source": "Exhibition simulator recording, 2026-09-19",
+  "source_stamp": [
+    10,
+    357000000
+  ],
+  "persp_src": [
+    0.25,
+    1.0,
+    0.75,
+    1.0,
+    0.62,
+    0.6,
+    0.38,
+    0.6
+  ],
+  "persp_dst": [
+    0.3,
+    1.0,
+    0.7,
+    1.0,
+    0.7,
+    0.0,
+    0.3,
+    0.0
+  ],
+  "note": "Example replay using the source images and default lane_detector_cam0 transformation; not a live sensor feed."
+}

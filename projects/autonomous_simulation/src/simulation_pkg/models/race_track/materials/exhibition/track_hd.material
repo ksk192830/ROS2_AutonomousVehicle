@@ -1,0 +1,19 @@
+// Display texture only. Original track.png remains the geometry reference.
+material RaceTrack/ExhibitionHD
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.0
+      specular 0.2 0.2 0.2 1.0 12.5
+      texture_unit
+      {
+        texture track_hd.png
+        filtering anisotropic
+        max_anisotropy 16
+      }
+    }
+  }
+}

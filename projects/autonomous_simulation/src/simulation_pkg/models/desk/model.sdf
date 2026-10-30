@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="desk">
+    <static>true</static>
+    <link name="desk_link">
+      <visual name="desk_visual">
+        <geometry>
+          <mesh>
+            <uri>model://desk/meshes/desk.obj</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="desk_collision">
+        <pose>0 0 0.455 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.557 0.618 0.91</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

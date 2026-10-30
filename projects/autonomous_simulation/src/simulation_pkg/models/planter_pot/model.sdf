@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2020 Google LLC.
+
+This work is licensed under the Creative Commons Attribution 4.0
+International License. To view a copy of this license, visit
+https://creativecommons.org/licenses/by/4.0/.
+-->
+<sdf version="1.6">
+  <model name="planter_pot">
+    <static>true</static>
+    <link name="planter_link">
+      <visual name="planter_visual">
+        <geometry>
+          <mesh>
+            <uri>model://planter_pot/meshes/model.obj</uri>
+            <scale>3 3 3</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.15 0.15 0.15 1</specular>
+        </material>
+      </visual>
+      <collision name="planter_collision">
+        <pose>0 0 0.25242 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.285</radius>
+            <length>0.50472</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

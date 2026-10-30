@@ -1,0 +1,1284 @@
+<sdf version="1.6">
+  <world name="default">
+
+  <gui fullscreen='0'>
+    <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'/>
+      <camera name='user_camera'>
+        <pose>0 0 51.4812 3.14159 1.57079 3.14159</pose> <!-- 초기 시점 -->
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+  </gui>
+
+  <scene>
+    <ambient>0.4 0.4 0.4 1</ambient>
+    <background>0.7 0.7 0.7 1</background>
+    <shadows>0</shadows>
+  </scene>
+
+  
+  <model name='top_camera'> <!-- 모델의 이름 -->
+      <link name='top_camera_link'> <!-- 링크 정의 -->
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+          <pose>0 0 0 0 0 1.57</pose> <!-- 카메라 박스 위치 조정 -->
+        </inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <gravity>1</gravity>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <enable_wind>0</enable_wind>
+        <visual name='visual'>
+          <pose>0 0 0 0 0 1.57</pose> <!-- 카메라 박스 위치 조정 -->
+          <geometry>
+            <box>
+              <size>0.8 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <lighting>1</lighting>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+            <shader type='pixel'>
+              <normal_map>__default__</normal_map>
+            </shader>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+            <specular>0.01 0.01 0.01 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+          <transparency>0</transparency>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <collision name='collision'>
+          <laser_retro>0</laser_retro>
+          <max_contacts>10</max_contacts>
+          <pose>0 0 0 0 0 1.57</pose> <!-- 카메라 박스 위치 조정 -->
+          <geometry>
+            <box>
+              <size>0.8 0.2 0.2</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>0 0 0</fdir1>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+              <torsional>
+                <coefficient>1</coefficient>
+                <patch_radius>0</patch_radius>
+                <surface_radius>0</surface_radius>
+                <use_patch_radius>1</use_patch_radius>
+                <ode>
+                  <slip>0</slip>
+                </ode>
+              </torsional>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+              <threshold>1e+06</threshold>
+            </bounce>
+            <contact>
+              <collide_without_contact>0</collide_without_contact>
+              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
+              <collide_bitmask>1</collide_bitmask>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0</min_depth>
+              </ode>
+              <bullet>
+                <split_impulse>1</split_impulse>
+                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+              </bullet>
+            </contact>
+          </surface>
+        </collision>
+
+        <sensor name='top_camera' type='camera'>
+          <pose>0 0 0 0 0 0</pose>
+          <update_rate>30</update_rate>
+          <visualize>0</visualize>
+          <camera name='head'>
+            <horizontal_fov>1.0856</horizontal_fov>
+            <image>
+              <width>480</width> <!-- 30 FPS 유지를 위한 위성캠 해상도 -->
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.03</near>
+              <far>200</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <plugin name='top_camera_driver' filename='libgazebo_ros_camera.so'>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>top_camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>top_camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+      <static>1</static>
+      <allow_auto_disable>1</allow_auto_disable>
+      <pose>0 0 13 0 1.57 0</pose> <!-- 카메라 프레임의 위치 조정 -->
+    </model>
+    
+    <!-- Grass base extending beyond the track and window wall. -->
+    <model name="grass_ground">
+      <pose>0 0 -0.002 0 0 0</pose>
+      <static>1</static>
+      <link name="grass_ground_link">
+        <visual name="grass_ground_visual">
+          <geometry>
+            <mesh>
+              <uri>model://race_track/meshes/grass_ground.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Original 16 x 12 m track image above the grass base. -->
+    <model name="ground">
+      <pose>0 0 0 0 0 1.57</pose>
+      <static>1</static>
+      
+      <link name="ground">
+        <collision name="ground_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>40 40</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        
+        <visual name="ground_visual">
+          <pose>0 0 0.006 0 0 0</pose>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>16 12</size>
+            </plane>
+          </geometry>
+          
+          <material>
+            <script>
+              <uri>model://race_track/materials/scripts</uri>
+              <uri>model://race_track/materials/textures</uri>
+              <name>track</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marble base inside the window wall; the original track image is layered above it. -->
+    <model name="marble_floor">
+      <static>1</static>
+      <pose>0 0 0.002 0 0 0</pose>
+      <link name="marble_floor_link">
+        <visual name="marble_floor_visual">
+          <geometry>
+            <mesh>
+              <uri>model://race_track/meshes/ellipse_floor.obj</uri>
+              <scale>9.2 12.2 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Traffic light fixed spawn (migrated from 012_deploy_lib.py random range) -->
+    <include>
+      <uri>model://traffic_sim</uri>
+      <name>traffic_light_stand</name>
+      <pose>-1.9 5.15 0 0 0 1.568773</pose>
+    </include>
+
+    <!--
+      Elliptical window wall
+      Center: (0.0, 0.0), radii: X=9.45 m, Y=12.45 m, count=36
+      Each pane is tangent to the ellipse and faces inward.
+      Regenerate these poses after changing radii.
+    -->
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_00</name>
+      <pose>9.450000 0.000000 2.0509549 1.5708 0 3.141593</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_01</name>
+      <pose>9.306433 2.161920 2.0509549 1.5708 0 -3.008545</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_02</name>
+      <pose>8.880095 4.258151 2.0509549 1.5708 0 -2.872049</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_03</name>
+      <pose>8.183940 6.225000 2.0509549 1.5708 0 -2.728570</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_04</name>
+      <pose>7.239120 8.002706 2.0509549 1.5708 0 -2.574477</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_05</name>
+      <pose>6.074343 9.537253 2.0509549 1.5708 0 -2.406251</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_06</name>
+      <pose>4.725000 10.782016 2.0509549 1.5708 0 -2.221070</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_07</name>
+      <pose>3.232090 11.699173 2.0509549 1.5708 0 -2.017923</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_08</name>
+      <pose>1.640975 12.260857 2.0509549 1.5708 0 -1.799052</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_09</name>
+      <pose>0.000000 12.450000 2.0509549 1.5708 0 -1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_10</name>
+      <pose>-1.640975 12.260857 2.0509549 1.5708 0 -1.342541</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_11</name>
+      <pose>-3.232090 11.699173 2.0509549 1.5708 0 -1.123670</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_12</name>
+      <pose>-4.725000 10.782016 2.0509549 1.5708 0 -0.920523</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_13</name>
+      <pose>-6.074343 9.537253 2.0509549 1.5708 0 -0.735342</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_14</name>
+      <pose>-7.239120 8.002706 2.0509549 1.5708 0 -0.567116</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_15</name>
+      <pose>-8.183940 6.225000 2.0509549 1.5708 0 -0.413023</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_16</name>
+      <pose>-8.880095 4.258151 2.0509549 1.5708 0 -0.269543</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_17</name>
+      <pose>-9.306433 2.161920 2.0509549 1.5708 0 -0.133048</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_18</name>
+      <pose>-9.450000 0.000000 2.0509549 1.5708 0 0.000000</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_19</name>
+      <pose>-9.306433 -2.161920 2.0509549 1.5708 0 0.133048</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_20</name>
+      <pose>-8.880095 -4.258151 2.0509549 1.5708 0 0.269543</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_21</name>
+      <pose>-8.183940 -6.225000 2.0509549 1.5708 0 0.413023</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_22</name>
+      <pose>-7.239120 -8.002706 2.0509549 1.5708 0 0.567116</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_23</name>
+      <pose>-6.074343 -9.537253 2.0509549 1.5708 0 0.735342</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_24</name>
+      <pose>-4.725000 -10.782016 2.0509549 1.5708 0 0.920523</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_25</name>
+      <pose>-3.232090 -11.699173 2.0509549 1.5708 0 1.123670</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_26</name>
+      <pose>-1.640975 -12.260857 2.0509549 1.5708 0 1.342541</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_27</name>
+      <pose>-0.000000 -12.450000 2.0509549 1.5708 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_28</name>
+      <pose>1.640975 -12.260857 2.0509549 1.5708 0 1.799052</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_29</name>
+      <pose>3.232090 -11.699173 2.0509549 1.5708 0 2.017923</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_30</name>
+      <pose>4.725000 -10.782016 2.0509549 1.5708 0 2.221070</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_31</name>
+      <pose>6.074343 -9.537253 2.0509549 1.5708 0 2.406251</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_32</name>
+      <pose>7.239120 -8.002706 2.0509549 1.5708 0 2.574477</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_33</name>
+      <pose>8.183940 -6.225000 2.0509549 1.5708 0 2.728570</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_34</name>
+      <pose>8.880095 -4.258151 2.0509549 1.5708 0 2.872049</pose>
+    </include>
+
+    <include>
+      <uri>model://window</uri>
+      <name>window_wall_35</name>
+      <pose>9.306433 -2.161920 2.0509549 1.5708 0 3.008545</pose>
+    </include>
+
+    <!-- Static pillars positioned in the Gazebo GUI. -->
+    <include>
+      <uri>model://pillar_window_match</uri>
+      <name>pillar_00</name>
+      <pose>-7.086310 -6.727420 1.979660 0 0 -0.240943</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_01</name>
+      <pose>-2.054970 11.383500 1.979660 0 0 -0.361471</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_02</name>
+      <pose>6.988530 6.825410 1.979650 0 0 -0.465971</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_03</name>
+      <pose>8.690900 1.001550 1.979660 0 0 -0.971127</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_04</name>
+      <pose>3.421730 10.723100 1.979650 0 0 -0.318373</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_05</name>
+      <pose>7.899150 -4.911220 1.979650 0 0 -0.971123</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_06</name>
+      <pose>3.656590 -10.603700 1.979650 0 0 -0.943069</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_07</name>
+      <pose>-3.690830 -10.701500 1.979650 0 0 -1.004700</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_08</name>
+      <pose>-6.134880 8.329670 1.979650 0 0 -0.971108</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_09</name>
+      <pose>-8.415490 3.055000 1.979660 0 0 -0.971110</pose>
+    </include>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_10</name>
+      <pose>-8.691450 0.003517 1.979660 0 0 -1.166410</pose>
+    </include>
+
+    <!-- White planter pots positioned in the Gazebo GUI. -->
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_00</name>
+      <pose>7.968810 -3.941680 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_01</name>
+      <pose>8.519090 -2.641690 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_02</name>
+      <pose>7.620250 -3.101970 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_03</name>
+      <pose>8.729660 -1.566990 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_04</name>
+      <pose>7.869860 -2.038930 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_05</name>
+      <pose>8.869350 -0.071857 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_06</name>
+      <pose>8.647600 1.939230 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_07</name>
+      <pose>8.087040 -0.685019 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_08</name>
+      <pose>8.364070 3.740130 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_09</name>
+      <pose>8.129680 4.371440 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_10</name>
+      <pose>6.578160 7.763820 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://planter_pot</uri>
+      <name>pot_11</name>
+      <pose>6.118800 8.507580 0 0 0 0</pose>
+    </include>
+
+    <!-- Indoor shrubs inserted into each planter pot. -->
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_00</name>
+      <pose>7.968810 -3.941680 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_01</name>
+      <pose>8.519090 -2.641690 0.38 0 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_02</name>
+      <pose>7.620250 -3.101970 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_03</name>
+      <pose>8.729660 -1.566990 0.38 0 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_04</name>
+      <pose>7.869860 -2.038930 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_05</name>
+      <pose>8.869350 -0.071857 0.38 0 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_06</name>
+      <pose>8.647600 1.939230 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_07</name>
+      <pose>8.087040 -0.685019 0.38 0 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_08</name>
+      <pose>8.364070 3.740130 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_09</name>
+      <pose>8.129680 4.371440 0.38 0 0 1.570796</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_10</name>
+      <pose>6.578160 7.763820 0.38 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://indoor_plant</uri>
+      <name>plant_11</name>
+      <pose>6.118800 8.507580 0.38 0 0 1.570796</pose>
+    </include>
+
+    <!-- Static sofas positioned in the Gazebo GUI. -->
+    <include>
+      <uri>model://sofa_00</uri>
+      <name>sofa_00_00</name>
+      <pose>4.320810 10.233100 0 0 0 -0.454576</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_00</uri>
+      <name>sofa_00_01</name>
+      <pose>5.276090 9.544750 0 0 0 -0.741541</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_00</uri>
+      <name>sofa_00_02</name>
+      <pose>-8.352790 4.057850 0 0 0 1.325070</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_00</uri>
+      <name>sofa_00_03</name>
+      <pose>-6.765270 7.526250 0 0 0 0.989762</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_01</uri>
+      <name>sofa_01_00</name>
+      <pose>7.464290 3.950020 0 0 0 -1.308600</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_01</uri>
+      <name>sofa_01_01</name>
+      <pose>-7.544930 5.783510 0 0 0 1.238560</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_02</uri>
+      <name>sofa_02_00</name>
+      <pose>5.121900 -9.258820 0 0 0 -0.758308</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_02</uri>
+      <name>sofa_02_01</name>
+      <pose>7.024550 -6.710980 0 0 0 -0.448408</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_03</uri>
+      <name>sofa_03_00</name>
+      <pose>0.764555 10.986000 0 0 0 2.813730</pose>
+    </include>
+
+    <include>
+      <uri>model://sofa_04</uri>
+      <name>sofa_04_00</name>
+      <pose>-3.845930 9.565430 0 0 0 0.641639</pose>
+    </include>
+
+    <!-- Static vending machines and cabinet positioned in the Gazebo GUI. -->
+    <include>
+      <uri>model://drink_vanding</uri>
+      <name>drink_vanding</name>
+      <pose>-2.090810 -11.253500 0 0 0 1.268910</pose>
+    </include>
+
+    <include>
+      <uri>model://snack_vanding</uri>
+      <name>snack_vanding</name>
+      <pose>-0.847261 -11.608100 0 0 0 -1.672300</pose>
+    </include>
+
+    <include>
+      <uri>model://cabinet</uri>
+      <name>cabinet</name>
+      <pose>-2.893300 -10.933600 0 0 0 1.152980</pose>
+    </include>
+
+    <include>
+      <uri>model://printer</uri>
+      <name>printer</name>
+      <pose>1.998670 -11.058700 0 0 0 -1.261780</pose>
+    </include>
+
+    <include>
+      <uri>model://desk</uri>
+      <name>desk</name>
+      <pose>2.758090 -10.878000 0 0 0 -2.698070</pose>
+    </include>
+
+    <include>
+      <uri>model://monitor</uri>
+      <name>monitor</name>
+      <pose>2.759210 -10.901100 0.904918 0 0 0.457539</pose>
+    </include>
+
+    <!-- Dense, higher-detail 3D landscaping on the grass outside the elliptical wall. -->
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_00</name>
+      <pose>7.051 12.569 0 0 0 1.794</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_01</name>
+      <pose>-1.981 -18.382 0 0 0 -1.248</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_02</name>
+      <pose>14.119 0.283 0 0 0 1.807</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_03</name>
+      <pose>-7.889 17.756 0 0 0 1.208</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_04</name>
+      <pose>8.714 17.483 0 0 0 2.025</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_05</name>
+      <pose>18.417 2.027 0 0 0 -1.732</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_06</name>
+      <pose>-12.177 -17.063 0 0 0 1.084</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_07</name>
+      <pose>11.564 11.065 0 0 0 -1.525</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_08</name>
+      <pose>-13.745 -5.997 0 0 0 2.127</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_09</name>
+      <pose>-18.033 -10.716 0 0 0 -0.092</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_10</name>
+      <pose>13.183 5.555 0 0 0 -0.770</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_11</name>
+      <pose>15.585 16.863 0 0 0 2.907</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_12</name>
+      <pose>17.490 -6.342 0 0 0 -1.557</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_13</name>
+      <pose>-14.675 4.911 0 0 0 1.355</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_14</name>
+      <pose>18.461 9.712 0 0 0 -2.540</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_15</name>
+      <pose>0.830 -14.773 0 0 0 2.647</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_16</name>
+      <pose>6.401 -16.966 0 0 0 2.649</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_17</name>
+      <pose>-16.798 11.141 0 0 0 -0.090</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_00</name>
+      <pose>-8.828 -8.337 0 0 0 -2.958</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_01</name>
+      <pose>-16.144 6.461 0 0 0 0.393</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_02</name>
+      <pose>11.791 3.795 0 0 0 -0.917</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_03</name>
+      <pose>14.847 10.853 0 0 0 0.603</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_04</name>
+      <pose>-2.970 -17.070 0 0 0 0.861</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_05</name>
+      <pose>15.867 12.617 0 0 0 -2.119</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_06</name>
+      <pose>7.765 -9.432 0 0 0 -1.163</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_07</name>
+      <pose>-12.285 10.301 0 0 0 -0.670</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_08</name>
+      <pose>-12.489 0.947 0 0 0 -2.022</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_09</name>
+      <pose>0.278 17.162 0 0 0 -1.477</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_10</name>
+      <pose>15.205 8.736 0 0 0 -2.282</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_11</name>
+      <pose>7.597 -18.366 0 0 0 2.431</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_12</name>
+      <pose>-4.533 -13.661 0 0 0 1.307</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_13</name>
+      <pose>-0.483 -15.967 0 0 0 1.949</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_14</name>
+      <pose>-9.356 -17.428 0 0 0 -1.189</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_15</name>
+      <pose>18.096 -13.798 0 0 0 1.134</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_16</name>
+      <pose>0.789 -17.544 0 0 0 -0.018</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_17</name>
+      <pose>10.189 9.784 0 0 0 -1.385</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_18</name>
+      <pose>-14.521 15.898 0 0 0 -2.640</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_19</name>
+      <pose>-8.710 16.412 0 0 0 2.460</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_20</name>
+      <pose>-10.404 4.452 0 0 0 2.923</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_21</name>
+      <pose>3.231 -13.301 0 0 0 1.338</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_22</name>
+      <pose>-9.246 10.406 0 0 0 2.208</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_23</name>
+      <pose>-14.767 -5.430 0 0 0 2.547</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_24</name>
+      <pose>18.475 -2.288 0 0 0 -0.030</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_25</name>
+      <pose>-14.055 18.052 0 0 0 1.187</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_26</name>
+      <pose>13.938 5.848 0 0 0 1.554</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_27</name>
+      <pose>-13.462 14.034 0 0 0 1.571</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_28</name>
+      <pose>-16.476 -6.544 0 0 0 1.655</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_29</name>
+      <pose>-9.578 -15.222 0 0 0 1.193</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_30</name>
+      <pose>17.913 -10.624 0 0 0 -1.140</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_31</name>
+      <pose>13.507 -0.019 0 0 0 1.743</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_32</name>
+      <pose>-13.628 -1.152 0 0 0 -0.840</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_33</name>
+      <pose>-0.966 15.266 0 0 0 3.095</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_34</name>
+      <pose>-0.125 13.669 0 0 0 1.386</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_35</name>
+      <pose>14.491 -7.219 0 0 0 0.091</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_36</name>
+      <pose>5.875 -15.899 0 0 0 2.234</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_37</name>
+      <pose>-5.330 16.040 0 0 0 -2.189</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_38</name>
+      <pose>15.901 -15.174 0 0 0 -2.557</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_39</name>
+      <pose>9.396 13.237 0 0 0 2.800</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_40</name>
+      <pose>-18.447 -16.599 0 0 0 -1.777</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_41</name>
+      <pose>-11.726 16.233 0 0 0 3.039</pose>
+    </include>
+
+    <!-- Additional dense landscaping; optimized imported meshes. -->
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_18</name>
+      <pose>-11.326 6.179 0 0 0 -0.925</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_42</name>
+      <pose>-9.752 14.168 0 0 0 0.876</pose>
+    </include>
+
+    <!-- Remaining dense landscaping instances. -->
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_19</name>
+      <pose>13.578 -11.563 0 0 0 0.324</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_20</name>
+      <pose>5.076 18.662 0 0 0 -1.724</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_21</name>
+      <pose>-10.626 10.778 0 0 0 -2.005</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_22</name>
+      <pose>15.700 -3.278 0 0 0 -2.166</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_tree</uri>
+      <name>landscape_tree_23</name>
+      <pose>-7.912 -10.325 0 0 0 1.536</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_43</name>
+      <pose>-17.675 -5.317 0 0 0 -2.536</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_44</name>
+      <pose>-9.756 -6.501 0 0 0 -1.593</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_45</name>
+      <pose>-16.935 1.229 0 0 0 2.106</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_46</name>
+      <pose>-15.049 -3.116 0 0 0 0.561</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_47</name>
+      <pose>16.511 7.822 0 0 0 -2.539</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_48</name>
+      <pose>-11.770 -8.003 0 0 0 2.056</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_49</name>
+      <pose>3.814 14.654 0 0 0 -0.521</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_50</name>
+      <pose>9.819 8.582 0 0 0 -0.486</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_51</name>
+      <pose>4.579 13.754 0 0 0 2.075</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_52</name>
+      <pose>13.133 -3.778 0 0 0 -1.502</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_53</name>
+      <pose>-8.362 -13.818 0 0 0 1.250</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_54</name>
+      <pose>14.077 12.265 0 0 0 -2.961</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_55</name>
+      <pose>-10.211 -13.328 0 0 0 1.247</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_56</name>
+      <pose>15.303 -11.445 0 0 0 -0.468</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_57</name>
+      <pose>9.617 5.296 0 0 0 -0.971</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_58</name>
+      <pose>17.546 -15.510 0 0 0 1.874</pose>
+    </include>
+
+    <include>
+      <uri>model://landscape_bush</uri>
+      <name>landscape_bush_59</name>
+      <pose>-16.620 -10.771 0 0 0 -0.516</pose>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+  </world>
+</sdf>

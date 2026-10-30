@@ -1,0 +1,10 @@
+# Shrub 01 by Rico Cilliers / Poly Haven, CC0.
+newmtl indoor_plant
+Ka 0.700000 0.700000 0.700000
+Kd 1.000000 1.000000 1.000000
+Ks 0.050000 0.050000 0.050000
+Ns 10.000000
+d 1.000000
+illum 2
+map_Kd ../materials/textures/shrub_01_rgba_1k.png
+map_d ../materials/textures/shrub_01_rgba_1k.png

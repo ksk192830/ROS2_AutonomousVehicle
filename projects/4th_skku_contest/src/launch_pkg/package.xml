@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>launch_pkg</name>
+  <version>0.0.0</version>
+  <description>Launch files package for E2E autonomous driving</description>
+  <maintainer email="sg@todo.todo">sg</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>interfaces_pkg</exec_depend>
+  <exec_depend>camera_pkg</exec_depend>
+  <exec_depend>control_pkg</exec_depend>
+  <exec_depend>decision_making_pkg</exec_depend>
+  <exec_depend>simulation_pkg</exec_depend>
+  <exec_depend>lidar_pkg</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

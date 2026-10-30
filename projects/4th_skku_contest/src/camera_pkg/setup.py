@@ -1,0 +1,57 @@
+from setuptools import find_packages, setup
+import os
+from glob import glob 
+
+package_name = 'camera_pkg'
+
+
+def package_files(data_dir):
+    paths = []
+    for root, _, files in os.walk(data_dir):
+        file_paths = [os.path.join(root, f) for f in files]
+        if file_paths:
+            install_dir = os.path.join('share', package_name, os.path.relpath(root, 'camera_pkg'))
+            paths.append((install_dir, file_paths))
+    return paths
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        # launch 파일 설치 경로 추가
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
+        (
+            os.path.join('share', package_name, 'model'),
+            glob('camera_pkg/model/*.pt') + glob('camera_pkg/model/*.engine'),
+        ),
+    ] + package_files('camera_pkg/lib'),
+    install_requires=['setuptools', 'rosidl_runtime_py'],  # 'rosidl_runtime_py' 추가
+    zip_safe=True,
+    maintainer='sg',
+    maintainer_email='sg@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    dependency_links=[
+        'https://github.com/ros2/rosidl_runtime_py',  # ROS 2 Python 런타임 의존성 링크
+    ],
+    entry_points={
+        'console_scripts': [
+             'image = camera_pkg.image_publisher:main',
+             'yolo_seg = camera_pkg.yolo_seg:main',
+             'engine_seg = camera_pkg.engine_seg:main',
+             'traffic_light = camera_pkg.traffic_light:main',
+             'lane = camera_pkg.lane_detect:main',
+             'obstacle = camera_pkg.obstacle:main',
+             'image_saver = camera_pkg.image_saver:main',
+             'parking_front_detect = camera_pkg.parking_front_detect:main',
+             'parking_rear_detect = camera_pkg.parking_rear_detect:main',
+             'cross_walk_detect = camera_pkg.cross_walk_detect:main',
+             
+        ],
+    },
+)

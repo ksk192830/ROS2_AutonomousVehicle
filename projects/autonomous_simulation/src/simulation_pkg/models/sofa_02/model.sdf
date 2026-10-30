@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="sofa_02">
+    <static>true</static>
+    <link name="sofa_link">
+      <visual name="sofa_visual">
+        <geometry>
+          <mesh>
+            <uri>model://sofa_02/meshes/sofa_02.obj</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="sofa_collision">
+        <pose>0 0 0.2685 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.8062 2.5972 0.5371</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

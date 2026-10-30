@@ -1,0 +1,77 @@
+# Blender 5.1.0 MTL File: 'None'
+# www.blender.org
+
+newmtl nfs:M_RimBadge_Max1
+Ns 554.545471
+Ka 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd RimBadge_D.png
+map_d RimBadge_D.png
+map_Bump -bm 1.000000 Car_MercedesBenz_C63AMG_2017_RimBadge_N.png
+
+newmtl nfs:M_Rim_Main_Max1
+Ns 465.454498
+Ka 0.500000 0.500000 0.500000
+Kd 0.006993 0.006993 0.006993
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Bump -bm 1.000000 Car_MercedesBenz_C63AMG_2017_Rim_N.png
+
+newmtl nfs:M_Rim_Secondary_Max1
+Ns 451.748230
+Ka 0.500000 0.500000 0.500000
+Kd 0.776224 0.776224 0.776224
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl phong1
+Ns 200.000000
+Ka 0.500000 0.500000 0.500000
+Kd 0.062937 0.062937 0.062937
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Bump -bm 1.000000 Global_Texture_Calliper_Normal.png
+
+newmtl whee:MercedesAMG_S63CoupeRewardRecycled_2020_CallipersC_67697fd
+Ns 1000.000000
+Ka 0.500000 0.500000 0.500000
+Kd 0.551000 0.035264 0.035264
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Bump -bm 1.000000 Global_Texture_Calliper_Normal.png
+
+newmtl whee:MercedesAMG_S63CoupeRewardRecycled_2020_CallipersC_9f5d626
+Ns 1000.000000
+Ka 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd CalliperBadgeA_Diffuse.png
+map_d CalliperBadgeA_Diffuse.png
+
+newmtl whee:MercedesAMG_S63CoupeRewardRecycled_2020_Wheel1A_3D_b559432
+Ns 1000.000000
+Ka 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd MercedesAMG_S63Coupe_2020_Wheel3A_DiffuseAOSO.png
+map_d MercedesAMG_S63Coupe_2020_Wheel3A_DiffuseAOSO.png
+map_Bump -bm 1.000000 MercedesAMG_S63Coupe_2020_Wheel3A_Normal.png

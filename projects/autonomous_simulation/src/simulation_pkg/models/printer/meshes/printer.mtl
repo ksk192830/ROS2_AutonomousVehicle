@@ -1,0 +1,119 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl PrinterDrawerHandle
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterDrawerHandle_baseColor.jpeg
+bump textures/PrinterDrawerHandle_normal.png
+map_bump textures/PrinterDrawerHandle_normal.png
+
+newmtl PrinterBodyTray
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterBodyTray_baseColor.jpeg
+bump textures/PrinterBodyTray_normal.png
+map_bump textures/PrinterBodyTray_normal.png
+
+newmtl PrinterBodyDark
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterBodyDark_baseColor.jpeg
+bump textures/PrinterBodyDark_normal.png
+map_bump textures/PrinterBodyDark_normal.png
+
+newmtl PrinterPlasticVeryDark
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterPlasticVeryDark_baseColor.jpeg
+bump textures/PrinterPlasticVeryDark_normal.png
+map_bump textures/PrinterPlasticVeryDark_normal.png
+
+newmtl PrinterPlasticLight
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterPlasticLight_baseColor.jpeg
+bump textures/PrinterPlasticLight_normal.png
+map_bump textures/PrinterPlasticLight_normal.png
+
+newmtl PrinterBody
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterBody_baseColor.jpeg
+bump textures/PrinterBody_normal.png
+map_bump textures/PrinterBody_normal.png
+
+newmtl PrinterBlackStuff
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterBlackStuff_baseColor.jpeg
+bump textures/PrinterBlackStuff_normal.png
+map_bump textures/PrinterBlackStuff_normal.png
+
+newmtl PrinterScreenMenu
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 1 1 1
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterScreenMenu_baseColor.jpeg
+bump textures/PrinterScreenMenu_normal.png
+map_bump textures/PrinterScreenMenu_normal.png
+
+newmtl PrinterPlasticDark
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/PrinterPlasticDark_baseColor.jpeg
+bump textures/PrinterPlasticDark_normal.png
+map_bump textures/PrinterPlasticDark_normal.png
+
+newmtl $Material_9
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2

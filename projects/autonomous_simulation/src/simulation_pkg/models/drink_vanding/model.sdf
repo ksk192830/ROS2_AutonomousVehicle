@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="drink_vanding">
+    <static>true</static>
+    <link name="vending_link">
+      <visual name="vending_visual">
+        <geometry>
+          <mesh>
+            <uri>model://drink_vanding/meshes/drink_vanding.obj</uri>
+            <scale>1.00117137 1.00117137 1.00117137</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="vending_collision">
+        <pose>0 0 1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.7406 1.1427 2</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

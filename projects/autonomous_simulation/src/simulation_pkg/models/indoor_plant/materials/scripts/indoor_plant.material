@@ -1,0 +1,21 @@
+material IndoorPlant/Shrub01
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+      ambient 0.7 0.7 0.7 1
+      diffuse 1 1 1 1
+      specular 0.05 0.05 0.05 1
+      cull_hardware none
+      cull_software none
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture shrub_01_rgba_1k.png
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl Case
+Kd 0 0 0
+Ka 0 0 0
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl RenderMonitor
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+map_Kd textures/RenderMonitor_baseColor.png
+
+newmtl material
+Kd 0.31081301 0.31081301 0.31081301
+Ka 0.31081301 0.31081301 0.31081301
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl Button_Material
+Kd 0.800000012 0.00951460004 0.00951460004
+Ka 0.800000012 0.00951460004 0.00951460004
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl ButtonTwoMaterial
+Kd 0.0549690984 0.0549690984 0.0549690984
+Ka 0.0549690984 0.0549690984 0.0549690984
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl ButtonTwoMaterial.001
+Kd 0.0549690984 0.0549690984 0.0549690984
+Ka 0.0549690984 0.0549690984 0.0549690984
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl $Material_6
+Kd 1 1 1
+Ka 1 1 1
+Ks 0.100000001 0.100000001 0.100000001
+Ke 0 0 0
+d 1
+Ns 16
+illum 2

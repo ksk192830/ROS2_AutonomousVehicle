@@ -1,0 +1,6 @@
+newmtl bush_leaves
+Ka 0.035 0.20 0.016
+Kd 0.065 0.42 0.030
+Ks 0.01 0.01 0.01
+Ns 2
+illum 2

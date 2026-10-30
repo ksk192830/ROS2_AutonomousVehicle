@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="monitor">
+    <static>true</static>
+    <link name="monitor_link">
+      <visual name="monitor_visual">
+        <geometry>
+          <mesh>
+            <uri>model://monitor/meshes/monitor.obj</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="monitor_collision">
+        <pose>0 0 0.275 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.769 0.162 0.55</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,63 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl Material.001
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32.0000076
+illum 2
+map_Kd textures/Material.001_baseColor.jpg
+
+newmtl elements_cena.001
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32.0000076
+illum 2
+map_Kd textures/elements_cena.001_baseColor.jpg
+bump textures/elements_cena.001_normal.png
+map_bump textures/elements_cena.001_normal.png
+
+newmtl glass
+Ka 0.281546712 0.792676091 0.775096834
+Kd 0.281546712 0.792676091 0.775096834
+Ks 0.15 0.15 0.15
+Ke 0 0 0
+d 0.0625117794
+Ns 32.0000076
+illum 2
+
+newmtl elements_cena
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32.0000076
+illum 2
+map_Kd textures/elements_cena_baseColor.jpg
+bump textures/elements_cena_normal.png
+map_bump textures/elements_cena_normal.png
+
+newmtl Material.003
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+Ke 0 0 0
+d 1
+Ns 32.0000076
+illum 2
+map_Kd textures/Material.003_baseColor.jpg
+
+newmtl $Material_5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.05 0.05 0.05
+Ke 0 0 0
+d 1
+illum 1

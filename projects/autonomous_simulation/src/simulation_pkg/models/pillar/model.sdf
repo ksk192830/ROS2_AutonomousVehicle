@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="pillar">
+    <static>true</static>
+    <link name="pillar_link">
+      <collision name="pillar_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.5</radius>
+            <length>3.95932</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="pillar_lower_visual">
+        <pose>0 0 -1.319773 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.5</radius>
+            <length>1.319773</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+      <visual name="pillar_upper_visual">
+        <pose>0 0 0.659887 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.5</radius>
+            <length>2.639547</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/White</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

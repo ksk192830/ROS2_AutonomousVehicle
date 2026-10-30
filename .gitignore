@@ -1,0 +1,60 @@
+# ROS 2 / colcon (all independent workspaces)
+**/build/
+**/install/
+**/log/
+**/.colcon/
+**/.ros/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+dist/
+.ipynb_checkpoints/
+
+# IDE, OS, local configuration
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+*.local.yaml
+*.local.yml
+
+# Trained model weights — local use only, not for public distribution
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.safetensors
+*.h5
+*.weights
+
+# Derived deployment artifacts: rebuild TensorRT per target environment
+*.engine
+*.plan
+
+# Generated training/benchmark outputs (curate results separately)
+**/runs/train*/
+**/runs/detect*/
+**/runs/segment*/
+**/wandb/
+**/tensorboard/
+**/events.out.tfevents.*
+**/checkpoints/
+**/datasets/raw/
+**/datasets/cache/
+
+# Generated captures (do not blanket-ignore curated Gazebo assets or examples)
+**/captures/
+**/recordings/
+**/rosbag2_*/
+*.db3
+*.mcap

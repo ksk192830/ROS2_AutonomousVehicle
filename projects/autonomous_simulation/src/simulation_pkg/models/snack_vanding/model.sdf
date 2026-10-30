@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="snack_vanding">
+    <static>true</static>
+    <link name="vending_link">
+      <visual name="vending_visual">
+        <geometry>
+          <mesh>
+            <uri>model://snack_vanding/meshes/snack_vanding.obj</uri>
+            <scale>0.96700576 0.96700576 0.96700576</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="vending_collision">
+        <pose>0 0 1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.0496 1.2656 2</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

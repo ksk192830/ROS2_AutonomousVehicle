@@ -1,0 +1,70 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.2.0)
+
+newmtl JianE_Mtl_202189153193298__Plastic
+Kd 0.309803993 0.309803993 0.309803993
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+
+newmtl M_0_1____4_dy_1
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+map_Kd textures/M_0_1____4_dy_1_baseColor.jpeg
+
+newmtl M_0018_____Plastic
+Kd 0.329412013 0.329412013 0.329412013
+Ke 0 0 0
+d 1
+Ns 1000
+illum 2
+
+newmtl pages_2
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+map_Kd textures/pages_2_baseColor.jpeg
+
+newmtl Cover_13
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+map_Kd textures/Cover_13_baseColor.jpeg
+
+newmtl Cover_1
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+map_Kd textures/Cover_1_baseColor.jpeg
+
+newmtl pages_3
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+map_Kd textures/pages_3_baseColor.jpeg
+
+newmtl Material__2147461291asdasd
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 4.87015438
+illum 2
+map_Kd textures/Material__2147461291asdasd_baseColor.jpeg
+
+newmtl $Material_8
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="window">
+    <static>true</static>
+    <link name="window_link">
+      <visual name="window_visual">
+        <geometry>
+          <mesh>
+            <uri>model://window/window.obj</uri>
+            <scale>0.0509554 0.0509554 0.0509554</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="window_collision">
+        <geometry>
+          <mesh>
+            <uri>model://window/window.obj</uri>
+            <scale>0.0509554 0.0509554 0.0509554</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

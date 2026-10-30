@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="landscape_bush">
+    <static>true</static>
+    <link name="bush_link">
+      <visual name="bush_lowpoly_visual">
+        <geometry><mesh><uri>model://landscape_bush/bush_download.obj</uri></mesh></geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+    </link>
+  </model>
+</sdf>

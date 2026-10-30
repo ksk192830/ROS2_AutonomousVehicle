@@ -1,0 +1,144 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+
+  <model name="traffic_sim">
+    <scale>1.0 1.0 1.0</scale>  <!-- global scale disabled; use explicit values below -->
+    <static>true</static>
+
+    <!-- 신호등 본체 -->
+    <link name="traffic_light_body">
+      <visual name="traffic_light_visual">
+        <geometry>
+          <mesh>
+            <uri>model://traffic_sim/meshes/traffic.dae</uri>
+            <scale>0.001015 0.001015 0.001015</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.01 0.01 0.01 1</ambient>
+          <diffuse>0.01 0.01 0.01 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+    </link>
+
+    <!-- 빨간 불빛 --> 
+    <link name="red_light_link">
+      <pose>0.88725 -0.098 0.8883 1.57 0 0</pose> 
+      <light name="red" type="spot"> 
+        <pose>0 -0.042 -0.098 2.469999 0 0</pose>
+        <attenuation>
+          <range>30</range>
+          <linear>0.05</linear>
+        </attenuation>
+        <diffuse>1 0 0 1</diffuse> 
+        <specular>1 1 1 1</specular>
+        <spot>
+          <inner_angle>0.3</inner_angle> 
+          <outer_angle>1.35</outer_angle> 
+          <falloff>1</falloff> 
+        </spot>
+        <direction>0 0 -1</direction> 
+      </light>
+      
+      <visual name="red">
+        <geometry> 
+          <cylinder>
+            <radius>0.105</radius>
+            <length>0.035</length>
+          </cylinder>
+          <sphere>
+            <radius>0.14</radius>
+          </sphere>
+        </geometry>
+        <transparency>0.6</transparency>
+        <material>
+          <ambient> 1 0 0 1</ambient>
+          <diffuse> 1 0 0 1</diffuse>
+          <specular>1 1 1 1</specular>
+          <emissive>1 0 0 1</emissive>
+      </material>
+      </visual>
+    </link>
+
+    <!-- 노란 불빛 -->
+    <link name="yellow_light_link"> 
+      <pose>1.141 -0.10255 0.8883 1.57 0 0</pose> 
+      <light name="yellow" type="spot"> 
+        <pose>0 -0.042 -0.098 2.469999 0 0</pose>
+        <attenuation>
+          <range>30</range>
+          <linear>0.05</linear>
+        </attenuation>
+        <diffuse>0 0 0 1</diffuse>
+        <specular>1 1 1 1</specular>
+        <spot>
+          <inner_angle>0.3</inner_angle>
+          <outer_angle>1.35</outer_angle> 
+          <falloff>1</falloff>
+        </spot>
+        <direction>0 0 -1</direction>
+      </light>
+      <visual name="yellow"> 
+        <geometry>
+          <cylinder>
+            <radius>0.105</radius>
+            <length>0.035</length>
+          </cylinder>
+          <sphere>
+            <radius>0.14</radius>
+          </sphere>
+        </geometry>
+        <transparency>0.6</transparency>
+        <material>
+          <ambient>0.03 0.03 0 1</ambient>
+          <diffuse>0.03 0.03 0 1</diffuse>
+          <specular>1 1 1 1</specular>
+          <emissive>0 0 0 1 </emissive>
+        </material>
+      </visual>
+    </link>
+
+    <!-- 초록 불빛 -->
+    <link name="green_light_link"> 
+      <pose>1.3944 -0.098 0.8883  1.57 0 0</pose>
+      <light name="green" type="spot"> 
+        <pose>0 -0.042 -0.098 2.469999 0 0</pose>
+        <attenuation>
+          <range>30</range>
+          <linear>0.05</linear>
+        </attenuation>
+        <diffuse>0 0 0 1</diffuse>
+        <specular>1 1 1 1</specular>
+        <spot>
+          <inner_angle>0.3</inner_angle>
+          <outer_angle>1.35</outer_angle> 
+          <falloff>1</falloff>
+        </spot>
+        <direction>0 0 -1</direction>
+      </light>
+      
+      <visual name="green"> 
+        <geometry>
+          <cylinder>
+            <radius>0.105</radius>
+            <length>0.035</length>
+          </cylinder>
+          <sphere>
+            <radius>0.14</radius>
+          </sphere>
+        </geometry>
+        <transparency>0.6</transparency>
+        <material>
+          <ambient>0 0.03 0 1</ambient>
+          <diffuse>0 0.03 0 1</diffuse>
+          <specular>1 1 1 1</specular>
+          <emissive>0 0 0 1</emissive>
+        </material>
+      </visual>
+    </link>
+    
+    <!-- Manual control is handled by simulation_pkg/traffic_light_keyboard_controller. -->
+
+  </model>
+</sdf>
